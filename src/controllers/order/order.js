@@ -35,7 +35,12 @@ export const createOrder = async(req, reply) => {
             },
         })
 
-        const savedOrder = await newOrder.save();
+        // const savedOrder = await newOrder.save();
+        let savedOrder = await newOrder.save();
+
+        savedOrder = await savedOrder.populate([
+            {path: "items.item"}
+        ])
         return reply.status(201).send(savedOrder)
 
 
